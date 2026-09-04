@@ -1,0 +1,35 @@
+{
+  "name": "snist-campus-navigator",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Modern, responsive campus navigation web application for SNIST juniors and freshers",
+  "scripts": {
+    "start": "bash start.sh",
+    "serve": "python3 server.py",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.3.4"
+  },
+  "keywords": [
+    "snist",
+    "campus-navigator",
+    "college-map",
+    "sreenidhi",
+    "navigation",
+    "react"
+  ],
+  "author": "SNIST Student Developers",
+  "license": "MIT"
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NAVIX - Campus Navigator</title>
+  <meta name="description" content="Find your way around SNIST campus effortlessly. Built for freshers and juniors to navigate academic blocks, labs, canteens, and sports facilities." />
+  
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%232563eb'><polygon points='3 11 22 2 13 21 11 13 3 11'/></svg>" />
+
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Custom Styles & Animations -->
+  <link rel="stylesheet" href="/src/styles.css" />
+
+  <!-- React 18 & ReactDOM 18 CDN with local fallback -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+</head>
+<body class="bg-slate-100 text-slate-900 antialiased min-h-screen">
+  <!-- React App Mount Root -->
+  <div id="root">
+    <!-- Initial Loading State while scripts initialize -->
+    <div class="min-h-screen flex flex-col items-center justify-center bg-slate-950 text-white p-6">
+      <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center shadow-xl shadow-blue-500/20 mb-4 animate-bounce">
+        <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <polygon points="3 11 22 2 13 21 11 13 3 11" />
+        </svg>
+      </div>
+      <h2 class="text-xl font-bold tracking-tight text-white mb-1">NAVIX Campus Navigator</h2>
+      <p class="text-xs text-slate-400">Loading campus blueprints & directory...</p>
+    </div>
+  </div>
+
+  <!-- Fallback message if JavaScript is disabled -->
+  <noscript>
+    <div class="p-8 text-center bg-rose-50 text-rose-900">
+      <h3 class="font-bold">JavaScript Required</h3>
+      <p class="text-sm mt-1">Please enable JavaScript in your browser to explore the NAVIX Campus Navigator.</p>
+    </div>
+  </noscript>
+
+  <!-- Load Application Bundle -->
+  <script src="/src/app-browser.js"></script>
+</body>
+</html>
