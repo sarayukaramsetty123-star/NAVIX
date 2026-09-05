@@ -14,7 +14,22 @@ export async function generateAIDirections(startId, destId, preferences = {}) {
   const start = baseRoute.start;
   const dest = baseRoute.destination;
 
-  // Check if external Gemini API key is configured
+  // Prefer Featherless, then retain Gemini compatibility for existing deployments.
+  if (config.featherlessApiKey) {
+    try {
+      const externalAIAdvice = await callFeatherlessAPI(start, dest, baseRoute, preferences);
+      if (externalAIAdvice) {
+        return {
+          source: 'featherless-ai',
+          ...baseRoute,
+          aiGuidance: externalAIAdvice
+        };
+      }
+    } catch (err) {
+      console.warn('Featherless API call failed, trying Gemini or heuristic fallback:', err.message);
+    }
+  }
+
   if (config.geminiApiKey) {
     try {
       const externalAIAdvice = await callGeminiAPI(start, dest, baseRoute, preferences);
@@ -38,6 +53,38 @@ export async function generateAIDirections(startId, destId, preferences = {}) {
     ...baseRoute,
     aiGuidance: heuristicGuidance
   };
+}
+
+async function callFeatherlessAPI(start, dest, baseRoute, preferences) {
+  const prompt = `You are an experienced senior student campus navigator. Provide practical walking guidance from "${start.name}" to "${dest.name}". Walk time: ${baseRoute.walkTimeMinutes} minutes. Distance: ${baseRoute.distanceMeters} meters. User preferences: ${JSON.stringify(preferences)}. Return only valid JSON with fields: summary, recommendedPath, studentTips (array of strings), shortcuts (array of strings), weatherNotes (array of strings).`;
+  const response = await fetch(`${config.featherlessBaseUrl}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${config.featherlessApiKey}`
+    },
+    body: JSON.stringify({
+      model: config.featherlessModel,
+      messages: [
+        { role: 'system', content: 'You give concise, accurate campus navigation guidance. Output JSON only.' },
+        { role: 'user', content: prompt }
+      ],
+      temperature: 0.3,
+      max_tokens: 500,
+      response_format: { type: 'json_object' }
+    })
+  });
+
+  if (!response.ok) {
+    const details = await response.text();
+    throw new Error(`Featherless API ${response.status}: ${details.slice(0, 180)}`);
+  }
+
+  const data = await response.json();
+  const content = data.choices?.[0]?.message?.content;
+  if (!content) return null;
+  const cleaned = content.replace(/^```json\s*/i, '').replace(/\s*```$/i, '').trim();
+  return JSON.parse(cleaned);
 }
 
 /**

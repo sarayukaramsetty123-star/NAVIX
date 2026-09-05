@@ -17,5 +17,8 @@ export const config = {
   corsOrigins: (process.env.CORS_ORIGIN || 'http://localhost:5173,http://127.0.0.1:5173')
     .split(',')
     .map(origin => origin.trim()),
+  featherlessApiKey: process.env.FEATHERLESS_API_KEY || '',
+  featherlessModel: process.env.FEATHERLESS_MODEL || 'meta-llama/Meta-Llama-3.1-8B-Instruct',
+  featherlessBaseUrl: (process.env.FEATHERLESS_BASE_URL || 'https://api.featherless.ai/v1').replace(/\/$/, ''),
   geminiApiKey: process.env.GEMINI_API_KEY || ''
 };

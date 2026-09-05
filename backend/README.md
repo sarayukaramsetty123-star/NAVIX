@@ -113,6 +113,9 @@ Configuration is loaded from `.env`:
 | `NODE_ENV` | `development` | Environment mode (`development` or `production`) |
 | `CORS_ORIGIN` | `http://localhost:5173,...` | Allowed CORS origins for the frontend |
 | `GEMINI_API_KEY` | *(empty)* | Optional Gemini API key for dynamic AI navigation reasoning |
+| `FEATHERLESS_API_KEY` | *(empty)* | Optional Featherless AI API key; takes priority over Gemini |
+| `FEATHERLESS_MODEL` | `meta-llama/Meta-Llama-3.1-8B-Instruct` | Featherless model identifier |
+| `FEATHERLESS_BASE_URL` | `https://api.featherless.ai/v1` | Featherless OpenAI-compatible API base URL |
 
 ---
 
